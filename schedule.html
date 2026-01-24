@@ -418,36 +418,61 @@ a.handout-link{
   display: block;
 }
 footer{margin-top:18px;color:var(--muted);font-size:0.9rem;text-align:center}
- /* 全体のコンテナ */
-  .tabs-container {
-    max-width: 800px;
-    margin: 20px auto;
-    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-  }
-  /* タブボタンの並び */
-  .tab-menu {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    border-bottom: 2px solid #e0e0e0;
-  }
-  .tab-menu li {
-    flex: 1;
-  }
-  .tab-menu button {
-    width: 100%;
-    padding: 12px 5px;
-    border: none;
-    background: none;
-    font-size: 16px;
-    font-weight: bold;
-    color: #666;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-bottom: 3px solid transparent;
-    margin-bottom: -2px; /* 親のborder-bottomと重ねる */
-  }
+ /* 1. コンテナの幅制限を解除（日程のために100%にする） */
+.tabs-container {
+  max-width: 100%;  /* ★ 800px から 100% に変更 */
+  margin: 0;        /* 余白をリセット */
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+}
+/* 2. タブメニュー：ここで幅を800pxに制限し、中央寄せ */
+.tab-menu {
+  display: flex;
+  width: 100%;
+  max-width: 800px; /* ★ 幅制限を追加 */
+  margin: 20px auto 0 auto; /* ★ 中央寄せ */
+  padding: 0;
+  list-style: none;
+  border-bottom: 3px solid #cbd5e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+/* 3. コンテンツエリア（共通）：基本は800pxで中央寄せ */
+.tab-content {
+  display: none;
+  max-width: 800px; /* ★ 幅制限を追加 */
+  margin: 0 auto 20px auto; /* ★ 中央寄せ */
+  padding: 25px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  line-height: 1.8;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+/* 4. 【新規追加】日程タブ(#schedule)だけ全幅（100%）にする上書き設定 */
+#schedule.tab-content {
+  max-width: 100%;  /* 幅制限を解除 */
+  padding: 0;       /* 余白調整（お好みで） */
+  margin: 0;
+  border: none;     /* 全幅の場合、枠線はない方が綺麗です */
+  border-radius: 0;
+  box-shadow: none;
+}
+/* 各リスト項目を均等に広げる */
+.tab-menu li {
+  flex: 1;              /* これで8等分される */
+  display: flex;
+}
+/* ボタンを枠内いっぱいに広げる */
+.tab-menu button {
+  width: 100%;          /* liの幅いっぱいに広げる */
+  padding: 12px 5px;    /* 左右の余白を少し削って文字入りを良くする */
+  font-size: 0.85rem;   /* 8項目あるので少し小さめが綺麗 */
+  white-space: nowrap;  /* 文字がはみ出しても改行させない */
+  text-align: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
   /* ホバー時とアクティブ時のスタイル */
   .tab-menu button:hover {
     color: #007bff;
@@ -1056,6 +1081,7 @@ function openSubTab(evt, subName) {
             </div>
         </div>
   
+    </header>
 <div class="tabs-container">
  <ul class="tab-menu">
   <li><button onclick="openTab(event, 'summary')">概要</button></li>
@@ -1063,6 +1089,7 @@ function openSubTab(evt, subName) {
   <li><button onclick="openTab(event, 'study')">予習</button></li>
   <li><button onclick="openTab(event, 'grades')">成績</button></li>
   <li><button class="active" onclick="openTab(event, 'firstClass')">ガイダンス</button></li>
+  <li><button onclick="openTab(event, 'schedule')">日程</button></li>
   <li><button onclick="openTab(event, 'news')">お知らせ</button></li>
   <li><button onclick="openTab(event, 'subjects')">関連科目</button></li>
 </ul>
@@ -1099,7 +1126,15 @@ function openSubTab(evt, subName) {
 </div>
 </div>
 <div id="grades" class="tab-content">
-  <div class="grade-container">
+    <ul class="sub-tab-menu">
+      <li><button class="sub-btn active" onclick="openSubTab(event, 'underg')">学部生</button></li>
+      <li><button class="sub-btn" onclick="openSubTab(event, 'grad')">修士生</button></li>
+ 
+    </ul>
+	
+	<div id="underg" class="sub-tab-content active">
+	
+	
     <div class="column-header">■ 成績評価・単位修得の基準</div>
     <table class="data-table">
       <thead>
@@ -1124,10 +1159,58 @@ function openSubTab(evt, subName) {
           <td class="condition red">未受験</td>
         </tr>
         <tr>
-          <th>期末課題</th>
-          <td>レポートまたはテスト</td>
+          <th>期末テスト</th>
+          <td>試験期間に実施する筆記試験</td>
           <td class="val center red">45%</td>
-          <td class="condition red">未提出（未受験）</td>
+          <td class="condition red">未受験</td>
+        </tr>
+      </tbody>
+      
+    </table>
+    <div class="deadline-footer">
+      <strong>中間テスト（筆記試験）予定日：</strong> 5月29日（金）13:00<br>
+      <strong>期末テスト（予定）：</strong> テスト期間（TBA）<br>
+    </div>
+	※中間テストの日は、進度に応じて（前）後の授業にずれることがあります。履修にあたって、予定が入っていないことを確認してください。
+  </div>
+  
+  
+<div id="grad" class="sub-tab-content">
+	 
+    <div class="column-header">■ 成績評価・単位修得の基準</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>評価項目</th>
+          <th>内容</th>
+          <th class="center">配分比率</th>
+          <th class="center">不可条件</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>宿題</th>
+          <td>授業内外の課題（平常点）</td>
+          <td class="val center red">10%</td>
+          <td class="condition red">未提出率 25%以上</td>
+        </tr>
+        <tr>
+          <th>中間テスト</th>
+          <td>学期中盤に実施する筆記試験</td>
+          <td class="val center red">25%</td>
+          <td class="condition red">未受験</td>
+        </tr>
+        <tr>
+          <th>期末課題１</th>
+          <td>試験期間に実施する筆記試験</td>
+          <td class="val center red">25%</td>
+          <td class="condition red">未受験</td>
+        </tr>
+		<tr>
+          <th>期末課題２</th>
+          <td>レポート</td>
+          <td class="val center red">40%</td>
+          <td class="condition red">未提出</td>
         </tr>
       </tbody>
       <tfoot>
@@ -1138,11 +1221,12 @@ function openSubTab(evt, subName) {
     </table>
     <div class="deadline-footer">
       <strong>中間テスト（筆記試験）予定日：</strong> 5月29日（金）13:00<br>
-      <strong>期末レポート提出期限（予定）：</strong> 8月5日（水）18:00 厳守<br><br>
-	  
+	   <strong>期末テスト（予定）：</strong> テスト期間（TBA）<br>
+      <strong>期末レポート提出期限（予定）：</strong> 8月5日（水）18:00 厳守<br>
     </div>
 	※中間テストの日は、進度に応じて（前）後の授業にずれることがあります。履修にあたって、予定が入っていないことを確認してください。
   </div>
+</div>
 </div>
 <div id="study" class="tab-content">
   <div class="study">
@@ -1168,6 +1252,8 @@ function openSubTab(evt, subName) {
       <b>毎週2時間ほど</b>の学習時間を確保することが不可欠です。
     </div>
   </div>
+   
+    
 </div>
 <div id="news" class="tab-content">
   <strong>休講情報</strong>：<span style="color:red;">5月22日（金）</span>は、学会出張のため休講<br>
@@ -1215,7 +1301,7 @@ function openSubTab(evt, subName) {
 </div>
 </div>
 <div id="caution-grid" class="tab-content">
- ■ 履修条件: 次の条件に合致しているかをチェックしてから履修申告をしてください
+  <div class="summary-grid">
   <div class="caution-grid">
     <div class="caution-card1 border-red">
       <div class="card-header">
@@ -1253,6 +1339,7 @@ function openSubTab(evt, subName) {
         講義内で数学的な概念が登場します。数式や論理的な記述に拒否感がないことが望ましいです。
       </div>
     </div>
+</div>
   </div>
 </div>
 <div id="subjects" class="tab-content">
@@ -1377,9 +1464,10 @@ function openSubTab(evt, subName) {
 		
   </div>
   
-    </header>
+  </div>
+<div id="schedule" class="tab-content">
   <div class="wrap">
-	※下記のスケジュールは暫定版で、今後変更されることがありうることを念頭において御覧ください。
+	スケジュールは暫定版で、今後変更されることがありうることに注意してください。
     <div class="card">
 		<div class="controls">
 			<div class="seg" role="tablist" aria-label="view mode">
