@@ -800,7 +800,7 @@ footer{margin-top:18px;color:var(--muted);font-size:0.9rem;text-align:center}
     /* 装飾用：ハイライトとフロー */
     .highlight {
       font-weight: bold;
-      background: linear-gradient(transparent 70%, #fff3cd 70%);
+      background: linear-gradient(transparent 20%, #fff3cd 70%);
     }
     .method-flow {
       margin-top: 8px;
@@ -885,7 +885,164 @@ footer{margin-top:18px;color:var(--muted);font-size:0.9rem;text-align:center}
   margin-bottom: 4px;
   display: block;
 }
+/*注意事項 */
+/* 全体のコンテナをグリッドに変更 */
+    .caution-grid {
+        display: grid;
+        /* PCでは2列、スマホでは1列に自動切替 */
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        margin: 25px 0;
+    }
+    .caution-card1 {
+        background: #fdfdfd;
+        border: 1px solid #eef2f7;
+        border-left: 6px solid #cbd5e0; /* 基本の線 */
+        border-radius: 8px;
+        padding: 20px;
+        transition: all 0.25s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* 内容とフッターを上下に分ける */
+    }
+    .caution-card {
+        background: #fdfdfd;
+        border: 1px solid #eef2f7;
+        border-left: 6px solid #cbd5e0; /* 基本の線 */
+        border-radius: 8px;
+        padding: 20px;
+        transition: all 0.25s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* 内容とフッターを上下に分ける */
+    }
+    /* 重要項目（一番目など）だけ色を変える */
+    .caution-card.highlight {
+        border-left-color: #4a5568; 
+    }
+    .caution-card1:hover {
+        background: #fff;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        transform: translateY(-5px); /* 上に少し浮く動きに変更（2列だとこちらが綺麗） */
+    }
+	
+    .caution-card:hover {
+        background: #fff;
+        
+    }
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 12px;
+    }
+    .subject-title {
+        font-weight: bold;
+        font-size: 1.05rem;
+        color: #2d3748;
+        line-height: 1.3;
+    }
+    .badge-important {
+        background-color: #e53e3e;
+        color: white;
+        font-size: 0.65rem;
+        font-weight: bold;
+        padding: 2px 8px;
+        border-radius: 4px;
+        flex-shrink: 0;
+    }
+    .card-content {
+        font-size: 0.9rem;
+        color: #4a5568;
+        line-height: 1.6;
+        flex-grow: 1; /* コンテンツが少なくても高さを揃える */
+    }
+    .card-footer {
+        margin-top: 15px;
+        padding-top: 10px;
+        border-top: 1px solid #f7fafc;
+        font-size: 0.8rem;
+        color: #718096;
+    }
+    .card-footer a {
+        color: #3182ce;
+        text-decoration: none;
+        font-weight: bold;
+    }
+	
+/* 各パネルのカラーバリエーション */
+.border-red {
+    border-left: 6px solid #e53e3e !important; /* 赤 */
+}
+.border-green {
+    border-left: 6px solid #38a169 !important; /* 緑 */
+}
+.border-blue {
+    border-left: 6px solid #3182ce !important; /* 青 */
+}
+.border-orange {
+    border-left: 6px solid #ed8936 !important; /* オレンジ */
+}
+/* ホバー時に枠線の色を少し濃くする演出（任意） */
+.border1-red:hover { border-color: #c53030; }
+/* .border-green:hover { border-color: #2f855a; }
+.border-blue:hover { border-color: #2b6cb0; }
+.border-orange:hover { border-color: #c05621; } 
+*/
+/* ヘッダー内の並びを調整 */
+.card-header {
+    display: flex;
+    align-items: center; /* アイコンと文字を中央に揃える */
+    margin-bottom: 12px;
+}
+	
+	
+	
+	
+/*関連科目  */
+/* 子タブ専用スタイル */
+.sub-tab-menu {
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e2e8f0;
+}
+.sub-btn {
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #64748b;
+  font-weight: bold;
+}
+.sub-btn.active {
+  color: #3182ce;
+  border-bottom: 2px solid #3182ce;
+  margin-bottom: -2px;
+}
+.sub-tab-content { display: none; }
+.sub-tab-content.active { display: block; }
 </style>
+<script>
+function openSubTab(evt, subName) {
+  // すべての子タブを非表示に
+  const contents = document.getElementsByClassName("sub-tab-content");
+  for (let i = 0; i < contents.length; i++) {
+    contents[i].style.display = "none";
+  }
+  // すべてのボタンからactiveを外す
+  const tabs = document.getElementsByClassName("sub-btn");
+  for (let i = 0; i < tabs.length; i++) {
+    tabs[i].classList.remove("active");
+  }
+  // 指定されたタブを表示
+  document.getElementById(subName).style.display = "block";
+  evt.currentTarget.classList.add("active");
+}
+</script>
 </head>
 <body>
     <header>
@@ -902,37 +1059,38 @@ footer{margin-top:18px;color:var(--muted);font-size:0.9rem;text-align:center}
 <div class="tabs-container">
  <ul class="tab-menu">
   <li><button onclick="openTab(event, 'summary')">概要</button></li>
-  <li><button onclick="openTab(event, 'study')">事前学習</button></li>
+  <li><button onclick="openTab(event, 'caution-grid')">履修条件</button></li>
+  <li><button onclick="openTab(event, 'study')">予習</button></li>
   <li><button onclick="openTab(event, 'grades')">成績</button></li>
-  <li><button class="active" onclick="openTab(event, 'firstClass')">初回授業</button></li>
+  <li><button class="active" onclick="openTab(event, 'firstClass')">ガイダンス</button></li>
   <li><button onclick="openTab(event, 'news')">お知らせ</button></li>
   <li><button onclick="openTab(event, 'subjects')">関連科目</button></li>
 </ul>
 <div id="summary" class="tab-content">
   <div class="summary-grid">
     <div class="summary-card" style="border-top-color: #3182ce;">
-      <h3>📚 【内容】</h3>
+      <h3>📚 【内容】 現代意味論・語用論の基礎</h3>
       <p>
         理論言語学における意味論の二大潮流である<br>
-        <span class="highlight">「認知意味論」</span>と<span class="highlight">「形式意味論」</span>の基礎を体系的に学びます。
+        <span class="highlight">「認知意味論」</span>と<span class="highlight">「形式意味論」</span>の基礎を体系的に学びます。また、その過程で<span class="highlight">「語用論」</span>についての知識も育んでいく。
       </p>
     </div>
     <div class="summary-card" style="border-top-color: #38a169;">
-      <h3>🎯 【目的】</h3>
+      <h3>🎯 【目的】 論文を読めるように</h3>
       <p>
-        意味論の<span class="highlight">近年の論文を自力で読み解く</span>ために必要となる、専門的な前提知識の完全な習得を目指します。
+        意味論の<span class="highlight">近年の論文を読み解く</span>ために必要となる、専門的な前提知識の習得を目指します。
       </p>
     </div>
     <div class="summary-card" style="border-top-color: #ed8936;">
-      <h3>🔄 【方法】</h3>
+      <h3>🔄 【方法】 反転授業</h3>
       <p>予習でインプット、対面で演習を行う反転授業スタイルです。</p>
       <div class="method-flow">
         <span class="flow-item">📹 予習ビデオ</span> ▶ <span class="flow-item">🏫 対面演習</span>
       </div>
     </div>
     <div class="summary-card" style="border-top-color: #718096;">
-      <h3>👤 【担当教員】</h3>
-      <p><b>山田 彬尭（Akitaka Yamada, he/him）</b></p>
+      <h3>👤 【担当教員】 山田 彬尭</h3>
+      <p><b>Akitaka Yamada (he/him)</b></p>
       <div class="instructor-info">
         慶應義塾大学 環境情報学部（兼）政策・メディア研究科 所属<br>
         🌐 <a href="https://ayamada.sfc.keio.ac.jp" target="_blank">教員ウェブサイト</a>
@@ -980,16 +1138,18 @@ footer{margin-top:18px;color:var(--muted);font-size:0.9rem;text-align:center}
     </table>
     <div class="deadline-footer">
       <strong>中間テスト（筆記試験）予定日：</strong> 5月29日（金）13:00<br>
-      <strong>期末レポート提出期限（予定）：</strong> 8月5日（水）18:00 厳守
+      <strong>期末レポート提出期限（予定）：</strong> 8月5日（水）18:00 厳守<br><br>
+	  
     </div>
+	※中間テストの日は、進度に応じて（前）後の授業にずれることがあります。履修にあたって、予定が入っていないことを確認してください。
   </div>
 </div>
 <div id="study" class="tab-content">
   <div class="study">
-    <span class="main-text">この授業の予習復習は</span><br>
+    <span class="main-text">この授業の予習は</span><br>
    （たぶん、それなりに） 「<span class="alert-text">重たい</span>」です<br>
    <br>
-   （でも、学期を終えるとその分、大きな充足感が待っているはず！）
+   （でも、学期を終えるとその分、大きな<span class = "highlight"><b>充足感</b></span>が待っている（はず）！）
   </div>
   <div class="study-grid">
     <div class="study-item">
@@ -1016,12 +1176,17 @@ footer{margin-top:18px;color:var(--muted);font-size:0.9rem;text-align:center}
   <strong>補講情報</strong>：<span style="color:blue;">7月24日（金）</span>は、上記分の補講
 </div>
   
+  
+  
+  
+  
+  
+  
 <div id="firstClass" class="tab-content active">
   <div class="study-notice">
     <div class="icon">💡</div>
     <div class="text">
-      履修登録までに必ず視聴してください<br>
-      <b>（重要）選抜課題も、このビデオを見た後に提出してください。</b>
+      <span class="badge-important">重要</span> <b><span class="highlight">オンライン ガイダンス＆選抜課題</span></b><br>履修登録までに、①下記の「<span class="highlight">ビデオ</span>」を視聴し、②「<span class="highlight">選抜課題</span>」を提出してください。</b>
     </div>
   </div>
   <span class="section-title">■ ビデオ：</span>
@@ -1048,42 +1213,97 @@ footer{margin-top:18px;color:var(--muted);font-size:0.9rem;text-align:center}
     </div>
   </div>
 </div>
-  </div>
-<div id="subjects" class="tab-content">
-    
-    <div class="subjects-section-title"><span>💎</span> 担当教員による関連科目</div>
-    <div class="summary-grid">
-      <div class="summary-card" style="border-top-color: #3182ce;">
-        <div class="card-header-flex">
-          <h3>📂 統語論</h3>
-          <a href="https://keiosfc-aki2025.github.io/syntax/schedule.html" class="button btn-inline">🚀 のぞいてみる</a>
-        </div>
-        <p>理論言語学（入門）：統語論</p>
+</div>
+<div id="caution-grid" class="tab-content">
+ ■ 履修条件: 次の条件に合致しているかをチェックしてから履修申告をしてください
+  <div class="caution-grid">
+    <div class="caution-card1 border-red">
+      <div class="card-header">
+        <div class="card-icon">🚫</div>
+        <span class="subject-title"><span class="badge-important">重要</span><span> </span>         ガイダンス動画＆選抜課題</span>
       </div>
-      <div class="summary-card" style="border-top-color: #38a169;">
-        <div class="card-header-flex">
-          <h3>🗣️ 音声・形態</h3>
-          <a href="https://keiosfc-aki2025.github.io/phonetics-phonology-morphology/schedule.html" class="button btn-inline">🚀 のぞいてみる</a>
-        </div>
-        <p>理論言語学（入門）：音声・音韻・形態論</p>
-      </div>
-      <div class="summary-card" style="border-top-color: #805ad5;">
-        <div class="card-header-flex">
-          <h3>🧪 研究会 B1</h3>
-          <a href="https://ayamada.sfc.keio.ac.jp/ptl" class="button btn-inline">🚀 のぞいてみる</a>
-        </div>
-        <p>理論言語学実践</p>
-      </div>
-      <div class="summary-card" style="border-top-color: #ed8936;">
-        <div class="card-header-flex">
-          <h3>🌍 研究会 B2</h3>
-          <a href="https://ayamada.sfc.keio.ac.jp/ldf" class="button btn-inline">🚀 のぞいてみる</a>
-        </div>
-        <p>言語×DH×FW（フィールドワーク）</p>
+      <div class="card-content">
+        履修登録前に「<a href="https://keiosfc-aki2025.github.io/semantics-and-pragmatics/schedule.html" class="link-small">ガイダンス動画</a> 」を視聴し、マッチングを測った後、選抜課題を提出。
       </div>
     </div>
-    <hr style="margin: 30px 0; border: 0; border-top: 1px dashed #e2e8f0;">
-    <div class="subjects-section-title"><span>🏫</span> 慶應義塾内での関連科目一覧</div>
+    <div class="caution-card border-green">
+      <div class="card-header">
+        <div class="card-icon">⏳</div>
+        <span class="subject-title">学習時間</span>
+      </div>
+      <div class="card-content">
+        反転授業形式のため予習が前提です。毎週、十分な予習・復習時間を確保してください。
+      </div>
+    </div>
+    <div class="caution-card border-blue">
+      <div class="card-header">
+        <div class="card-icon">📅</div>
+        <span class="subject-title">継続的な出席</span>
+      </div>
+      <div class="card-content">
+        出欠は取りませんが、内容の積み上げが強いため、欠席すると復帰が難しくなります。
+      </div>
+    </div>
+    <div class="caution-card border-orange">
+      <div class="card-header">
+        <div class="card-icon">🔢</div>
+        <span class="subject-title">数学への耐性</span>
+      </div>
+      <div class="card-content">
+        講義内で数学的な概念が登場します。数式や論理的な記述に拒否感がないことが望ましいです。
+      </div>
+    </div>
+  </div>
+</div>
+<div id="subjects" class="tab-content">
+    <ul class="sub-tab-menu">
+      <li><button class="sub-btn active" onclick="openSubTab(event, 'sub-instructor')">担当教員</button></li>
+      <li><button class="sub-btn" onclick="openSubTab(event, 'sub-keio-summary')">慶應塾内（概要）</button></li>
+      <li><button class="sub-btn" onclick="openSubTab(event, 'sub-table-list')">開講一覧</button></li>
+    </ul>
+	
+	<div id="sub-instructor" class="sub-tab-content active">
+    <div class="caution-grid">
+	
+    <div class="caution-card border-red">
+      <div class="card-header">
+			<div class="card-icon">🏠</div>
+				<span class="subject-title">理論言語学（入門）統語論　<a href="https://keiosfc-aki2025.github.io/syntax/schedule.html" class="button btn-inline">🚀</a></span>
+			</div>
+		<div class="card-content">
+			<b><span class="highlight">文レベル</span></b>における階層構造とルールを学びます。ことばの意味というよりは言葉の形に焦点を当てています。GIGAとして開講され、英語で行われます。
+		</div>
+    </div>
+    <div class="caution-card border-green">
+      <div class="card-header">
+			<div class="card-icon">🗣️</div>
+				<span class="subject-title">理論言語学（入門）音韻形態論　<a href="https://keiosfc-aki2025.github.io/syntax/schedule.html" class="button btn-inline">🚀</a></span>
+			</div>
+		<div class="card-content">
+			<b><span class="highlight">単語レベル</span></b>における階層構造とルールについて、音への知識を重視しつつ学びます。ことばの意味というよりは言葉の形に焦点を当てています。GIGAとして開講され、英語で行われます。
+		</div>
+    </div>
+    <div class="caution-card border-blue">
+      <div class="card-header">
+			<div class="card-icon">🧪️</div>
+				<span class="subject-title">研究会 B1：理論言語学実践　<a href="https://ayamada.sfc.keio.ac.jp/ptl" class="button btn-inline">🚀</a></div>
+		<div class="card-content">
+			理論言語学（入門）で習った知識をもとに、<b><span class="highlight">先行研究</span></b>を読み、より深い言語分析を行います。
+		</div>
+    </div>
+    <div class="caution-card border-orange">
+      <div class="card-header">
+			<div class="card-icon">🌍️</div>
+				<span class="subject-title">研究会 B2：言語×DH×FW　<a href="https://ayamada.sfc.keio.ac.jp/ldf" class="button btn-inline">🚀</a></div>
+		<div class="card-content">言語実験やコーパスなど、生の<b><span class="highlight">データ</span></b>を採取し、<b><span class="highlight">定量的分析</span></b>を行う言語研究の方法論に焦点を当てた研究会です。
+		</div>
+		
+    </div>
+	
+    </div>
+	</div>
+    <div id="sub-keio-summary" class="sub-tab-content">
+    <div class="subjects-section-title"><span>🏫</span> 慶應義塾内での関連科目概要</div>
 	※ほかにも気が付いた人がいたら教えてください！（敬称略で失礼いたします）
     <div class="summary-grid">
       <div class="summary-card" style="border-top-color: #3182ce; background: #f8fafc;">
@@ -1106,8 +1326,57 @@ footer{margin-top:18px;color:var(--muted);font-size:0.9rem;text-align:center}
         <h3>現代論理学の諸問題 他</h3>
         <p style="font-size: 0.8rem; color: #718096; margin-top: 8px;">👤 峯島, 秋吉 他 (三田・対面)</p>
       </div>
-    </div>
+		</div>		
+	</div>
+	
+<style>
+  .btn{display:inline-block;
+	padding:10px 20px;
+	background:#f1f5f9;
+	border:1px solid #cbd5e1;
+	border-radius:5px;
+	cursor:pointer;
+	font-weight:700;
+	color:#475569
+　　}
+  .btn:hover{background:#e2e8f0}
+  .t{width:100%;border-collapse:collapse;font:13px sans-serif;text-align:center;font-weight:700;display:none}
+  .t td{border:1px solid #ddd;padding:6px;color:#333}
+  .c1{background:#feb2b2}
+  .c2{background:#d6bcfa}
+  .c3{background:#bee3f8}
+  .c4{background:#c6f6d5}
+  .c5{background:#b2f5ea}
+</style>
+<div id="sub-table-list" class="sub-tab-content">
+    <div class="subjects-section-title"><span>📅</span> 2025年度 開講科目一覧</div>
+    
+    <p style="margin-bottom: 10px;">敬称略で失礼します。他にも気が付かれた方がいたら教えてください。：</p>
+    
+    <table class="t" style="display:table;"> 
+        <tr class="h"><th>対象</th><th>科目</th><th>担当者（敬称略）</th></tr>
+	<tr><td rowspan="7" class="c3">認知意味論</td><td>英語学IX/Ⅳ</td><td>多々良,八木橋</td></tr>
+	<tr><td>英語学Ⅷ/ⅩⅣ</td><td>中村</td></tr>
+	<tr><td>英語学特講ⅠＣ/ⅡＣ</td><td>西村</td></tr>
+	<tr><td>英語学特講ⅠＤ</td><td>小原</td></tr>
+	<tr><td>言語学Ⅰ/Ⅲ/Ⅳ</td><td>平沢,古賀</td></tr>
+	<tr><td>言語認識論</td><td>小原,斎藤</td></tr>
+	<tr><td>自然言語処理特論</td><td>小原,斎藤</td></tr>
+	<tr><td class="c5">語彙意味論</td><td>言語学特殊Ⅹ</td><td>小野</td></tr>
+	<tr><td rowspan="3" class="c4">形式意味論</td><td>言語学概論Ⅱ</td><td>星</td></tr>
+	<tr><td>言語学特殊Ⅶ</td><td>島田</td></tr>
+	<tr><td>言語学特殊ⅩⅧ</td><td>タンクレディ</td></tr>
+	<tr><td rowspan="5" class="c2">論理学</td><td>計算論理学</td><td>中村</td></tr>
+	<tr><td>哲学Ⅰ</td><td>田中</td></tr><tr><td>哲学倫理学特殊ⅠＧ/ⅡＧ</td><td>菅崎</td></tr>
+	<tr><td>論理学I, II</td><td>佐々木,高橋,山崎,小関</td></tr>
+	<tr><td>論理学入門I, II</td><td>峯島</td></tr>
+	<tr><td rowspan="3" class="c1">論理学／形式意味論</td><td>現代論理学Ⅰ/Ⅱ</td><td>峯島,秋吉</td></tr>
+	<tr><td>哲学特殊講義Ⅲ/Ⅳ</td><td>峯島</td></tr>
+	<tr><td>哲学倫理学特殊I, II</td><td>峯島,秋吉</td></tr>
+   </table>
+		
   </div>
+  
     </header>
   <div class="wrap">
 	※下記のスケジュールは暫定版で、今後変更されることがありうることを念頭において御覧ください。
