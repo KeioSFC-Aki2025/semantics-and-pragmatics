@@ -997,6 +997,9 @@ footer{margin-top:18px;color:var(--muted);font-size:0.9rem;text-align:center}
     }
 	
 /* 各パネルのカラーバリエーション */
+.border-brown {
+    border-left: 6px solid #4B2C20 !important; /* kogetya */
+}
 .border-red {
     border-left: 6px solid #e53e3e !important; /* 赤 */
 }
@@ -1278,10 +1281,10 @@ function openSubTab(evt, subName) {
   <span class="section-title">■ ビデオ：</span>
   <div class="video-grid">
     <a href="https://youtu.be/7M3Z0sKUxaA" class="button">1.1 はじめに（16:47)</a>
-    <a href="https://youtu.be/9oEq_prmo_c" class="button">1.2 具体例１（13:50）</a>
-    <a href="https://youtu.be/tBcHnV8wVDg" class="button">1.2 具体例２（14:34）</a>
-    <a href="https://youtu.be/TTNUqbT5Y2g" class="button">1.3 むずかしさ（16:00）</a>
-    <a href="https://youtu.be/H7sWhyrHHT0" class="button">履修にあたって（6:35）</a>
+    <a href="https://youtu.be/9oEq_prmo_c" class="button">1.2 縦の具体例（13:50）</a>
+    <a href="https://youtu.be/tBcHnV8wVDg" class="button">1.2 横の具体例（14:34）</a>
+    <a href="https://youtu.be/i-0-E3S8HSM" class="button">1.3 縦のむずかしさ（8:05）</a>
+    <a href="https://youtu.be/wkRZUBeaKUE" class="button">1.3 横のむずかしさ（27:22）</a>
   </div>
   <p class="note-text">※このようなビデオが毎週あるので（長さは1時間半くらいです）、そのようなスタイルが自分に合うかもチェックしてください。</p>
   <div class="resources-wrapper">
@@ -1344,36 +1347,64 @@ function openSubTab(evt, subName) {
 </div>
 <div id="subjects" class="tab-content">
     <ul class="sub-tab-menu">
-      <li><button class="sub-btn active" onclick="openSubTab(event, 'sub-instructor')">担当教員</button></li>
-      <li><button class="sub-btn" onclick="openSubTab(event, 'sub-keio-summary')">慶應塾内（概要）</button></li>
-      <li><button class="sub-btn" onclick="openSubTab(event, 'sub-table-list')">開講一覧</button></li>
+      <li><button class="sub-btn active" onclick="openSubTab(event, 'sub-instructor')">担当教員の授業一覧</button></li>
+      <li><button class="sub-btn" onclick="openSubTab(event, 'sub-keio-summary')">慶應塾内での関連科目（概要）</button></li>
+      <li><button class="sub-btn" onclick="openSubTab(event, 'sub-table-list')">慶應塾内での関連科目（リスト2025）</button></li>
     </ul>
 	
 	<div id="sub-instructor" class="sub-tab-content active">
     <div class="caution-grid">
+	
+    <div class="caution-card border-green">
+      <div class="card-header">
+			<div class="card-icon">📑</div>
+				<span class="subject-title" >コーパス言語学　<a href="https://keiosfc-aki2025.github.io/syntax/schedule.html" class="button btn-inline">🚀</a></span>
+			</div>
+			<p style="text-align:right;"　> <span style="font-size: small ;">☆☆☆★★</span></p>
+		<div class="card-content">
+			<b><span class="highlight">デジタル化されたテキストデータ</span></b>を用いて、ことばの特徴を探っていきます。GIGA/Project English Cとして開講され、英語で行われます。
+		</div>
+    </div>
+    <div class="caution-card border-green">
+      <div class="card-header">
+			<div class="card-icon">🗣️</div>
+				<span class="subject-title" style="font-size: small ;">理論言語学（入門）音声学・音韻論・形態論　<a href="https://keiosfc-aki2025.github.io/syntax/schedule.html" class="button btn-inline">🚀</a></span>
+			</div>
+			<p style="text-align:right;"　> <span style="font-size: small ;">☆☆☆★★</span></p>
+		<div class="card-content">
+			<b><span class="highlight">単語レベル</span></b>における階層構造とルールについて、音への知識を重視しつつ学びます。ことばの意味というよりは言葉の形に焦点を当てています。GIGA/Project English Cとして開講され、英語で行われます。
+		</div>
+    </div>
 	
     <div class="caution-card border-red">
       <div class="card-header">
 			<div class="card-icon">🏠</div>
 				<span class="subject-title">理論言語学（入門）統語論　<a href="https://keiosfc-aki2025.github.io/syntax/schedule.html" class="button btn-inline">🚀</a></span>
 			</div>
+			<p style="text-align:right;"　> <span style="font-size: small ;">☆☆★★★</span></p>
 		<div class="card-content">
 			<b><span class="highlight">文レベル</span></b>における階層構造とルールを学びます。ことばの意味というよりは言葉の形に焦点を当てています。GIGAとして開講され、英語で行われます。
 		</div>
     </div>
-    <div class="caution-card border-green">
+	
+	
+    <div class="caution-card border-brown">
       <div class="card-header">
-			<div class="card-icon">🗣️</div>
-				<span class="subject-title">理論言語学（入門）音韻形態論　<a href="https://keiosfc-aki2025.github.io/syntax/schedule.html" class="button btn-inline">🚀</a></span>
+			<div class="card-icon">💭</div>
+				<span class="subject-title">理論言語学（入門）意味論/語用論　<a href="https://keiosfc-aki2025.github.io/syntax/schedule.html" class="button btn-inline">🚀</a></span>
 			</div>
 		<div class="card-content">
-			<b><span class="highlight">単語レベル</span></b>における階層構造とルールについて、音への知識を重視しつつ学びます。ことばの意味というよりは言葉の形に焦点を当てています。GIGAとして開講され、英語で行われます。
+					<p style="text-align:right;"　> <span style="font-size: small ;">☆★★★★</span></p>
+			<b><span class="highlight">単語・文・文脈</span></b>におけることば意味の分析の仕方を学びます。大学院併設の先端研究の授業ですので、難しい内容を一部含みます。日本語で行われます。
 		</div>
     </div>
+	
+	
     <div class="caution-card border-blue">
       <div class="card-header">
 			<div class="card-icon">🧪️</div>
 				<span class="subject-title">研究会 B1：理論言語学実践　<a href="https://ayamada.sfc.keio.ac.jp/ptl" class="button btn-inline">🚀</a></div>
+				<p style="text-align:right;"　> <span style="font-size: small ;">★★★★★</span></p>
 		<div class="card-content">
 			理論言語学（入門）で習った知識をもとに、<b><span class="highlight">先行研究</span></b>を読み、より深い言語分析を行います。
 		</div>
@@ -1382,6 +1413,8 @@ function openSubTab(evt, subName) {
       <div class="card-header">
 			<div class="card-icon">🌍️</div>
 				<span class="subject-title">研究会 B2：言語×DH×FW　<a href="https://ayamada.sfc.keio.ac.jp/ldf" class="button btn-inline">🚀</a></div>
+				
+				<p style="text-align:right;"　> <span style="font-size: small ;">★★★★★</span></p>
 		<div class="card-content">言語実験やコーパスなど、生の<b><span class="highlight">データ</span></b>を採取し、<b><span class="highlight">定量的分析</span></b>を行う言語研究の方法論に焦点を当てた研究会です。
 		</div>
 		
