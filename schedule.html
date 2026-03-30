@@ -7,9 +7,72 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
 <style>
+/* --- グローバルナビゲーション用変数 --- */
+:root {
+  --gnav-font: 'Zen Maru Gothic', sans-serif;
+  --gnav-bg: #fcefee;
+  --gnav-text: #5a4a42;
+  --gnav-accent: #d35400;
+  --gnav-hover: #ffb7c5;
+}
+/* --- グローバルナビゲーション用CSS --- */
+.gnav-header {
+  text-align: center; padding: 2rem 1rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 3px dotted var(--gnav-hover);
+  position: sticky; top: 0; z-index: 1000; /* 他の要素より上に表示 */
+  font-family: var(--gnav-font);
+  color: var(--gnav-text);
+  line-height: 1.8;
+}
+.gnav-title { font-size: 2.5rem; font-weight: bold; margin: 0; color: var(--gnav-accent); text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+.gnav-nav { margin-top: 1.5rem; }
+.gnav-nav a {
+  text-decoration: none; color: var(--gnav-text); font-weight: bold;
+  margin: 0 10px; padding: 8px 16px; border-radius: 20px;
+  background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: all 0.3s ease; display: inline-block;
+}
+.gnav-nav a:hover { background-color: var(--gnav-hover); color: white; transform: translateY(-2px); }
+/* ドロップダウン */
+.gnav-dropdown { position: relative; display: inline-block; }
+.gnav-dropdown-content {
+  visibility: hidden; opacity: 0; position: absolute;
+  background-color: rgba(255, 255, 255, 0.95); 
+  width: max-content; white-space: nowrap;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15); border-radius: 15px; padding: 10px;
+  z-index: 1100; top: 120%; left: 50%; transform: translateX(-50%) translateY(15px); 
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  backdrop-filter: blur(5px); display: flex; flex-direction: column; gap: 5px;
+}
+.gnav-dropdown-content a {
+  margin: 0 !important; box-shadow: none !important; transform: none !important;
+  border-radius: 10px; padding: 10px 15px; font-size: 0.95rem; text-align: center; background-color: transparent;
+}
+.gnav-dropdown-content a:hover { background-color: var(--gnav-bg); color: var(--gnav-accent); }
+.gnav-dropdown:hover .gnav-dropdown-content {
+  visibility: visible; opacity: 1; transform: translateX(-50%) translateY(0);
+}
+/* 言語切り替え */
+.lang-toggle {
+  font-family: var(--gnav-font); font-weight: bold; color: #fff;
+  background-color: var(--gnav-accent); border: none; border-radius: 20px;
+  padding: 8px 16px; margin-left: 15px; cursor: pointer;
+  box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.lang-toggle:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 15px rgba(211, 84, 0, 0.4); }
+.lang-en { display: none; }
+body.is-en .lang-ja { display: none; }
+body.is-en .lang-en { display: inline; }
+@media (max-width: 768px) {
+  .gnav-title { font-size: 1.8rem; }
+  .gnav-nav a { margin: 5px; }
+}
 :root{
   --bg:#ffffff;
   --card:#ffffff;
+  
   --muted:#555555;
   --accent:#1e3a8a;
   --accent-2:#3b82f6;
@@ -1073,6 +1136,44 @@ function openSubTab(evt, subName) {
 </script>
 </head>
 <body>
+    <div class="gnav-header">
+        <span class="lang-en"><h1 class="gnav-title">Akitaka Yamada's Website</h1></span>
+        <span class="lang-ja"><p class="gnav-title">山田彬尭のウェブサイトへようこそ！</p></span>
+        <div class="gnav-nav">
+            <a href="https://ayamada.sfc.keio.ac.jp/"><span class="lang-ja">ホーム</span><span class="lang-en">HOME</span></a>
+            <a href="https://ayamada.sfc.keio.ac.jp/publications"><span class="lang-ja">研究業績</span><span class="lang-en">PUBLICATIONS</span></a>
+            <a href="https://ayamada.sfc.keio.ac.jp/cv">CV</a>
+            <div class="gnav-dropdown">
+                <a href="https://ayamada.sfc.keio.ac.jp/%E8%A4%87%E8%A3%BD-issues-in-theoretical-linguistics-1"><span class="lang-ja">授業</span><span class="lang-en">TEACHING</span></a>
+                <div class="gnav-dropdown-content">
+                    <a href="#"><span class="lang-ja">音声学・音韻論・形態論<br>（Project Eng C）</span> <span class="lang-en">Phonetics, Phonology, and Morphology (GIGA)</span></a>
+                    <a href="https://keiosfc-aki2025.github.io/syntax/schedule.html"><span class="lang-ja">統語論</span><span class="lang-en">Syntax</span> (GIGA)</a>
+                    <a href="https://keiosfc-aki2025.github.io/semantics-and-pragmatics/schedule.html"><span class="lang-ja">意味論・語用論<br>学部・大学院併設</span> <span class="lang-en">Semantics and Pragmatics</span></a>
+                </div>
+            </div>
+			<div class="gnav-dropdown">
+                <a href="https://keiosfc-aki2025.github.io/Seminar/SeminarProfile.html"><span class="lang-ja">研究会（ゼミ）</span><span class="lang-en">SEMINARS</span></a>
+                <div class="gnav-dropdown-content">
+                    <a href="https://keiosfc-aki2025.github.io/Seminar-B-Practice-in-Theoretical-Linguistics/TeamProfile.html"><span class="lang-ja">理論言語学実践</span><span class="lang-en">Practice in Theoretical Linguistics</span></a>
+                    <a href="https://ayamada.sfc.keio.ac.jp/ldf2025spring"><span class="lang-ja">言語×DH×FW</span><span class="lang-en">Language, DH, and FW</span></a>
+                </div>
+            </div>
+            
+			
+			<div class="gnav-dropdown">
+                <a><span class="lang-ja">コーパス分析</span><span class="lang-en">Corpus Tools</span></a>
+                <div class="gnav-dropdown-content">
+                    <a href="http://keiosfc-aki2025.github.io/KeioSFC/keioSFC.html">KeioSFC</a>
+                    <a href="https://keiosfc-aki2025.github.io/KeioSFC/xmleditor.html">Keio XMLeditor</a>
+                </div>
+            </div>
+			
+			
+			<a href="https://ayamada.sfc.keio.ac.jp/contact"><span class="lang-ja">コンタクト</span><span class="lang-en">CONTACT</span></a>
+            <button id="lang-btn" class="lang-toggle">English</button>
+        </div>
+    </div>
+	
     <header>
       <div class="header-content">
         <div class="course-header">
@@ -1391,7 +1492,7 @@ function openSubTab(evt, subName) {
     <div class="caution-card border-brown">
       <div class="card-header">
 			<div class="card-icon">💭</div>
-				<span class="subject-title">理論言語学（入門）意味論/語用論　<a href="https://keiosfc-aki2025.github.io/syntax/schedule.html" class="button btn-inline">🚀</a></span>
+				<span class="subject-title">理論言語学（入門）意味論/語用論　<a href="https://keiosfc-aki2025.github.io/semantics-and-pragmatics/schedule.html" class="button btn-inline">🚀</a></span>
 			</div>
 		<div class="card-content">
 					<p style="text-align:right;"　> <span style="font-size: small ;">☆★★★★</span></p>
@@ -1403,7 +1504,7 @@ function openSubTab(evt, subName) {
     <div class="caution-card border-blue">
       <div class="card-header">
 			<div class="card-icon">🧪️</div>
-				<span class="subject-title">研究会 B1：理論言語学実践　<a href="https://ayamada.sfc.keio.ac.jp/ptl" class="button btn-inline">🚀</a></div>
+				<span class="subject-title">研究会 B1：理論言語学実践　<a href="https://keiosfc-aki2025.github.io/Seminar/SeminarProfile.html" class="button btn-inline">🚀</a></div>
 				<p style="text-align:right;"　> <span style="font-size: small ;">★★★★★</span></p>
 		<div class="card-content">
 			理論言語学（入門）で習った知識をもとに、<b><span class="highlight">先行研究</span></b>を読み、より深い言語分析を行います。
@@ -1584,45 +1685,41 @@ const scheduleData =
 [
   {
     "session": "Part",
-    "class": "パート１：「文」"
+    "class": "パート１（理論的基礎）：「横」の関係",
+    "HW": "選抜課題(docx)<https://www.youtube.com/watch?v=7M3Z0sKUxaA&feature=youtu.be>, 選抜課題（PDF)<https://www.youtube.com/watch?v=7M3Z0sKUxaA&feature=youtu.be>"
   },
   {
     "session": "1",
-    "chapter": "第2章",
-    "class": "命題論理I",
+    "chapter": "第1章",
+    "class": "ガイダンス／命題論理1: notとand",
     "date": 46122,
+    "video": "1.1はじめに（16:47）<https://www.youtube.com/watch?v=7M3Z0sKUxaA&feature=youtu.be>, 1.2 縦の具体例（13:50）<https://www.youtube.com/watch?v=7M3Z0sKUxaA&feature=youtu.be>, 1.2 横の具体例<https://www.youtube.com/watch?v=7M3Z0sKUxaA&feature=youtu.be>, 1.3 縦の難しさ<https://www.youtube.com/watch?v=7M3Z0sKUxaA&feature=youtu.be>, 1.3 横の難しさ（27:22）<https://www.youtube.com/watch?v=7M3Z0sKUxaA&feature=youtu.be>",
+    "comment": "<span class=\"highlight\">オンラインガイダンス＆選抜課題<\/span><br>履修登録までに、①下記の「ビデオ」を視聴し、「選抜課題」を提出してください。",
+    "handout": "配布プリント（PDF）<https://keiosfc-aki2025.github.io/semantics-and-pragmatics/Chapter-1-Introduction.pdf>",
     "date2": "46122"
   },
   {
     "session": "2",
     "chapter": "第2章",
-    "class": "命題論理II",
+    "class": "命題論理2: orとif",
     "date": 46129,
     "deadlineHW": 46129,
     "deadlineClass": 46129,
     "date2": "46129"
   },
   {
-    "session": "Part",
-    "class": "パート２：「文脈」"
-  },
-  {
     "session": "3",
-    "chapter": "第3章",
-    "class": "語用論と動的意味論",
+    "chapter": "第2章",
+    "class": "述語論理1: everyとsome",
     "date": 46136,
     "deadlineHW": 46136,
     "deadlineClass": 46136,
     "date2": "46136"
   },
   {
-    "session": "Part",
-    "class": "パート３：「単語」"
-  },
-  {
     "session": "4",
-    "chapter": "第4章",
-    "class": "述語論理",
+    "chapter": "第3章",
+    "class": "述語論理2: 多重量化／統語論",
     "date": 46143,
     "deadlineHW": 46143,
     "deadlineClass": 46143,
@@ -1630,7 +1727,8 @@ const scheduleData =
   },
   {
     "session": "5",
-    "class": "形式意味論の基礎",
+    "chapter": "第4章",
+    "class": "形式意味論の基礎1: 解釈関数、ラムダ演算子",
     "date": 46150,
     "deadlineHW": 46150,
     "deadlineClass": 46150,
@@ -1638,8 +1736,8 @@ const scheduleData =
   },
   {
     "session": "6",
-    "chapter": "第5章",
-    "class": "認知意味論の基礎",
+    "chapter": "復習",
+    "class": "形式意味論の基礎2: タイプ",
     "date": 46157,
     "deadlineHW": 46157,
     "deadlineClass": 46157,
@@ -1666,12 +1764,12 @@ const scheduleData =
   },
   {
     "session": "Part",
-    "class": "パート４：「動詞」まわりの意味"
+    "class": "パート２（理論的基礎）：「縦」の関係"
   },
   {
     "session": "8",
-    "chapter": "第6章",
-    "class": "トピック１：動詞",
+    "chapter": "第5章",
+    "class": "認知意味論の基礎",
     "format": "補講",
     "date": 46178,
     "deadlineHW": 46178,
@@ -1679,8 +1777,13 @@ const scheduleData =
     "date2": "46178"
   },
   {
+    "session": "Part",
+    "class": "パート３：「動詞」まわりの意味"
+  },
+  {
     "session": "9",
-    "class": "トピック１：動詞",
+    "chapter": "第6章",
+    "class": "VP：語彙アスペクト分類と分解意味論",
     "date": 46185,
     "deadlineHW": 46185,
     "deadlineClass": 46185,
@@ -1695,8 +1798,8 @@ const scheduleData =
   },
   {
     "session": "10",
-    "chapter": "第7章",
-    "class": "トピック２：助動詞（モダリティ）",
+    "chapter": "第6章",
+    "class": "演習",
     "date": 46199,
     "deadlineHW": 46199,
     "deadlineClass": 46199,
@@ -1704,7 +1807,8 @@ const scheduleData =
   },
   {
     "session": "11",
-    "class": "トピック２：助動詞（モダリティ）",
+    "chapter": "第7章",
+    "class": "VoiceP：態とイベント意味論",
     "date": 46206,
     "deadlineHW": 46206,
     "deadlineClass": 46206,
@@ -1712,8 +1816,8 @@ const scheduleData =
   },
   {
     "session": "12",
-    "chapter": "第8章",
-    "class": "トピック３：助動詞（アスペクト）",
+    "chapter": "第7章",
+    "class": "演習",
     "date": 46213,
     "deadlineHW": 46213,
     "deadlineClass": 46213,
@@ -1721,7 +1825,8 @@ const scheduleData =
   },
   {
     "session": "13",
-    "class": "トピック３：助動詞（アスペクト）",
+    "chapter": "第8章",
+    "class": "TP＆AspP：テンス/アスペクトと時制意味論",
     "date": 46220,
     "deadlineHW": 46220,
     "deadlineClass": 46220,
@@ -1729,21 +1834,142 @@ const scheduleData =
   },
   {
     "session": "14",
-    "chapter": "第9章",
-    "class": "トピック４：助動詞（テンス）",
+    "chapter": "第8章",
+    "class": "演習",
     "format": "補講",
     "date": 46227,
     "deadlineHW": 46227,
     "date2": "46227"
   },
   {
+    "session": "15",
+    "class": "ここまでの復習"
+  },
+  {
+    "session": "Part",
+    "class": "期末課題"
+  },
+  {
     "class": "期末テスト／期末レポート"
+  },
+  {
+    "session": "Part",
+    "class": "ここから先は「夏季特プロ」で扱う予定："
+  },
+  {
+    "session": "Part",
+    "class": "パート４：「コンテクスト」にかかわる意味"
+  },
+  {
+    "session": "1",
+    "chapter": "第9章",
+    "class": "モダリティ"
+  },
+  {
+    "session": "2",
+    "chapter": "第9章",
+    "class": "演習"
+  },
+  {
+    "session": "3",
+    "chapter": "第10章",
+    "class": "発話行為論"
+  },
+  {
+    "session": "4",
+    "chapter": "第10章",
+    "class": "演習"
+  },
+  {
+    "session": "5",
+    "chapter": "第11章",
+    "class": "前提"
+  },
+  {
+    "session": "6",
+    "chapter": "第11章",
+    "class": "演習"
+  },
+  {
+    "session": "7",
+    "chapter": "第12章",
+    "class": "ポライトネス理論"
+  },
+  {
+    "session": "8",
+    "chapter": "第12章",
+    "class": "演習"
+  },
+  {
+    "session": "9",
+    "chapter": "第13章",
+    "class": "会話の含意"
+  },
+  {
+    "session": "10",
+    "chapter": "第13章",
+    "class": "演習"
+  },
+  {
+    "session": "Part",
+    "class": "パート５：「名詞」にかかわる意味"
+  },
+  {
+    "session": "11",
+    "chapter": "第14章",
+    "class": "NP：固有名（内包／外延）"
+  },
+  {
+    "session": "12",
+    "chapter": "第14章",
+    "class": "演習"
+  },
+  {
+    "session": "13",
+    "chapter": "第15章",
+    "class": "QP：一般化量化詞理論"
+  },
+  {
+    "session": "14",
+    "chapter": "第15章",
+    "class": "演習"
+  },
+  {
+    "session": "15",
+    "chapter": "第16章",
+    "class": "DP：DefinitenessとSpecificity"
+  },
+  {
+    "session": "16",
+    "chapter": "第16章",
+    "class": "演習"
+  },
+  {
+    "session": "Part",
+    "class": "パート６：「形容詞」にかかわる意味"
+  },
+  {
+    "session": "17",
+    "chapter": "第17章",
+    "class": "AP：形容詞（名詞修飾）と関係節"
+  },
+  {
+    "session": "18",
+    "chapter": "第17章",
+    "class": "演習"
+  },
+  {
+    "session": "19",
+    "chapter": "第18章",
+    "class": "AP：程度形容詞と比較級、最上級"
   }
 ]
 ;
 const GeneralComment = "";
 // セクションタイトルの識別子を定義
 const SECTION_TITLE_IDENTIFIER = "Part";
+// 現在どのPart（セクション）を処理しているかを保持する変数
+let currentPartIndex = 0;
 // =====================
 // UI elements
 // =====================
@@ -1920,6 +2146,77 @@ function init(){
   // 1. まずテーブルの枠組みを作る
   initializeTables();
   
+  /* -----------------------------
+   showAdjacentSessions(center)
+   クリックした session 番号（数値または文字列）を受け取り、
+   「Class N-1 / Class N / Class N+1」を BySession と同じ見た目で表示する
+   ※ 既存の renderTable(tableId, dataArray, emptyMessage) を再利用します
+   ----------------------------- */
+function showAdjacentSessions(centerSessionRaw) {
+  // 数値化して安全に扱う
+  const centerSession = Number(centerSessionRaw);
+  if (isNaN(centerSession)) return;
+  // Part 行を除き、session を数値化できる行だけでソートする
+  const numericSessions = scheduleData
+    .filter(item => item.session !== SECTION_TITLE_IDENTIFIER)
+    .map(item => Object.assign({}, item, { sessionNum: Number(item.session) }))
+    .filter(item => Number.isInteger(item.sessionNum))
+    .sort((a, b) => a.sessionNum - b.sessionNum);
+  const idx = numericSessions.findIndex(s => s.sessionNum === centerSession);
+  if (idx === -1) return;
+  const prev = numericSessions[idx - 1] || null;
+  const curr = numericSessions[idx] || null;
+  const next = numericSessions[idx + 1] || null;
+  // セッション画面に切り替え（見た目はBySessionと同じパネルを使う）
+  document.body.dataset.mode = 'session';
+  btnSession.classList.add('active');
+  btnSession.setAttribute('aria-selected', 'true');
+  btnFull.classList.remove('active');
+  btnFull.setAttribute('aria-selected', 'false');
+  fullScheduleContainer.style.display = 'none';
+  sessionOverviewContainer.style.display = 'block';
+  searchBox.disabled = true;
+  searchBox.value = '';
+  // 正しいレンダラを呼ぶ
+  renderTripleSessionView(prev, curr, next);
+}
+/* -----------------------------
+   renderTripleSessionView(prev,curr,next)
+   各パネル（panelLast/panelNext/panelAfterNext）を、
+   BySession と **同じ**テーブル描画関数 renderTable(...) で埋める
+   ※ タイトルは "Class N" 形式にする
+   ----------------------------- */
+function renderTripleSessionView(prev, curr, next) {
+  const panels = [
+    { panelId: 'panelLast', data: prev, tableId: 'scheduleTable_panelLast' },
+    { panelId: 'panelNext', data: curr, tableId: 'scheduleTable_panelNext' },
+    { panelId: 'panelAfterNext', data: next, tableId: 'scheduleTable_panelAfterNext' }
+  ];
+  panels.forEach(({ panelId, data, tableId }) => {
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+    // タイトルを書き換える（"Class N" または空）
+    const h2 = panel.querySelector('h2');
+    if (data && Number.isInteger(Number(data.session))) {
+      h2.textContent = `Class ${Number(data.session)}`;
+    } else {
+      h2.textContent = '';
+    }
+    // テーブル描画：renderTable は (tableId, dataArray, emptyMessage) を受け取る想定
+    // データがある場合は [data] を渡す（配列）。無ければ空配列。
+    if (data) {
+      renderTable(tableId, [data]);
+    } else {
+      renderTable(tableId, [], '該当なし');
+    }
+  });
+}
+  btnSession.addEventListener('click', () => {
+  setMode('session');
+});
+btnFull.addEventListener('click', () => {
+  setMode('full');
+});
   // 2. データを実際に描画する（これを先に行う）
   renderFull(); 
   
@@ -1960,63 +2257,493 @@ function initializeTables() {
 /**
  * By Session Overview モードの描画処理。
  */
+// =========================================
+//  BySession 描画ロジック (Partスキップ & Date右寄せ修正版)
+// =========================================
+let activeSessionTab = 'next'; // 初期値：次回
 function renderSessionOverview() {
-    const { lastClass, nextClass, afterNextClass } = findRelevantSessions();
-    // 各パネルに対応するテーブルIDとデータを指定して描画
-    // 過去の授業がない場合はメッセージは表示しない（Class 0が表示されるか、空欄になる）
-    renderTable('scheduleTable_panelLast', lastClass);
-    // 未来の授業がない場合はメッセージを表示
-    renderTable('scheduleTable_panelNext', nextClass, "計画されている授業はありません");
-    renderTable('scheduleTable_panelAfterNext', afterNextClass, "計画されている授業はありません");
+  const container = document.getElementById('sessionOverviewContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  // 1. データの特定（Partを除外して計算）
+  // ------------------------------------------------
+  
+  // ★重要：Sessionが 'Part' のものを除外したリストを作成
+  // ※もし 'Part 1' のように番号つく場合も含めるなら !item.session.includes('Part') に変更してください
+  const validSessions = scheduleData.filter(item => item.session !== 'Part');
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let nextIndex = -1;
+  
+  // 除外後のリスト(validSessions)を使って次回を探す
+  for (let i = 0; i < validSessions.length; i++) {
+    let sDate;
+    if (validSessions[i].date2 && !isNaN(Number(validSessions[i].date2))) {
+       sDate = new Date((Number(validSessions[i].date2) - 25569) * 86400 * 1000);
+    } else {
+       sDate = new Date(validSessions[i].date);
+    }
+    
+    // 今日の日付以降の最初の授業を探す
+    if (sDate >= today) {
+      nextIndex = i;
+      break;
+    }
+  }
+  // もし全て過去なら
+  if (nextIndex === -1) nextIndex = validSessions.length;
+  // インデックスの特定（validSessions配列内での位置）
+  const dataMap = {
+    prev:      (nextIndex - 1 >= 0) ? validSessions[nextIndex - 1] : null,
+    next:      (nextIndex < validSessions.length) ? validSessions[nextIndex] : null,
+    afterNext: (nextIndex + 1 < validSessions.length) ? validSessions[nextIndex + 1] : null
+  };
+  // 2. タブの描画
+  // ------------------------------------------------
+  const tabContainer = document.createElement('div');
+  tabContainer.className = 'session-tab-container';
+  const tabs = [
+    { key: 'prev',      label: '前回',   colorClass: 'tab-prev' },
+    { key: 'next',      label: '次回',   colorClass: 'tab-next' },
+    { key: 'afterNext', label: '次々回', colorClass: 'tab-after-next' }
+  ];
+  tabs.forEach(tab => {
+    const btn = document.createElement('button');
+    btn.textContent = tab.label;
+    btn.className = `session-tab-btn ${tab.colorClass}`;
+    
+    if (tab.key === activeSessionTab) {
+      btn.classList.add('active');
+    }
+    if (!dataMap[tab.key]) {
+      btn.style.opacity = '0.5';
+      btn.style.cursor = 'default';
+    }
+    btn.onclick = () => {
+      if (dataMap[tab.key]) {
+        activeSessionTab = tab.key;
+        renderSessionOverview();
+      }
+    };
+    tabContainer.appendChild(btn);
+  });
+  container.appendChild(tabContainer);
+  // 3. コンテンツエリアの描画
+  // ------------------------------------------------
+  const contentWrapper = document.createElement('div');
+  contentWrapper.className = 'session-content-wrapper';
+  const item = dataMap[activeSessionTab];
+  if (item) {
+    // A. ヘッダー情報 (左：Class名 / 右：日付)
+    const headerInfo = document.createElement('div');
+    headerInfo.className = 'session-header-info';
+    
+    // 日付フォーマット
+    const formatDateJP = (d) => {
+        if(!d) return '';
+        if(!isNaN(Number(d))) { 
+             const date = new Date((Number(d) - 25569) * 86400 * 1000);
+             return `${date.getMonth() + 1}月${date.getDate()}日`;
+        }
+        return d;
+    };
+    const displayDate = formatDateJP(item.date2 || item.date);
+    // タイトル部分（左寄せ）
+    let titleText = '';
+    if (item.session && item.session !== 'Part') {
+        titleText = `Class ${item.session}: ${item.class || ''}`;
+    } else {
+        titleText = item.class || '';
+    }
+    // ★HTML生成：左右にspanを分けることでjustify-content: space-betweenを効かせる
+    headerInfo.innerHTML = `
+      <span>${titleText}</span>
+      <span>${displayDate}</span>
+    `;
+    
+    contentWrapper.appendChild(headerInfo);
+    // B. コメント（Study Notice）
+    if (item.comment) {
+      const noticeDiv = document.createElement('div');
+      noticeDiv.className = 'study-notice';
+      
+      let cleanComment = item.comment;
+      cleanComment = cleanComment.replace(/^(【?コメント】?|comment)[:：]?\s*/i, '');
+      
+      noticeDiv.innerHTML = `
+        <div class="icon">💡</div>
+        <div class="text">
+          <span class="badge-important">今回のポイント</span>
+          
+          ${cleanComment}
+        </div>
+      `;
+      contentWrapper.appendChild(noticeDiv);
+    }
+    // C. ビデオ (Video Grid)
+    if (item.video) {
+      const vTitle = document.createElement('span');
+      vTitle.className = 'section-title';
+      vTitle.textContent = '■ ビデオ：';
+      contentWrapper.appendChild(vTitle);
+      const vGrid = document.createElement('div');
+      vGrid.className = 'video-grid';
+      
+      let videos = [];
+      if(typeof parseEntries === 'function'){
+          videos = parseEntries(item.video);
+      } else {
+          const lines = item.video.split(/\r?\n/);
+          lines.forEach(line => {
+             const match = line.match(/(.*)\((https?:\/\/.*)\)/);
+             if(match){
+                 videos.push({ label: match[1].trim(), url: match[2].trim() });
+             } else {
+                 if(line.trim()) videos.push({ label: line.trim(), url: null });
+             }
+          });
+      }
+      if (videos.length > 0) {
+        videos.forEach(v => {
+          if (v.url) {
+            const a = document.createElement('a');
+            a.href = v.url;
+            a.className = 'button video-btn';
+            a.textContent = v.label;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            vGrid.appendChild(a);
+          } else {
+            const span = document.createElement('span');
+            span.className = 'button';
+            span.style.background = '#eee';
+            span.style.color = '#999';
+            span.textContent = v.label;
+            vGrid.appendChild(span);
+          }
+        });
+      } else {
+        vGrid.innerHTML = '<span style="color:#777; padding:10px;">ビデオはありません</span>';
+      }
+      contentWrapper.appendChild(vGrid);
+    }
+    // D. 資料・課題 (Resources Wrapper)
+    const resWrapper = document.createElement('div');
+    resWrapper.className = 'resources-wrapper';
+    // -- 資料 --
+    const handoutBox = document.createElement('div');
+    handoutBox.className = 'resource-box';
+    handoutBox.innerHTML = '<span class="section-title" style="margin-top:0; border:none; padding:0;">■ 資料：</span>';
+    const hArea = document.createElement('div');
+    hArea.className = 'file-area';
+    
+    let handouts = [];
+    if(typeof parseEntries === 'function') {
+        handouts = parseEntries(item.handout || '');
+    } else {
+        const lines = (item.handout || '').split(/\r?\n/);
+        lines.forEach(line => {
+             const match = line.match(/(.*)\((https?:\/\/.*)\)/);
+             if(match) handouts.push({ label: match[1].trim(), url: match[2].trim() });
+             else if(line.trim()) handouts.push({ label: line.trim(), url: null });
+        });
+    }
+    if (handouts.length > 0) {
+      handouts.forEach(h => {
+        if (h.url) {
+          const a = document.createElement('a');
+          a.href = h.url;
+          let btnClass = 'button';
+          if(h.url.endsWith('.pdf')) btnClass += ' pdf-button';
+          else if(h.url.endsWith('.docx')) btnClass += ' docx-button';
+          a.className = btnClass;
+          a.textContent = h.label;
+          a.target = '_blank';
+          hArea.appendChild(a);
+        } else {
+          const div = document.createElement('div');
+          div.textContent = h.label;
+          div.style.fontSize = '0.9rem';
+          hArea.appendChild(div);
+        }
+      });
+    } else {
+      hArea.innerHTML = '<span style="color:#999; font-size:0.85rem;">資料なし</span>';
+    }
+    handoutBox.appendChild(hArea);
+    resWrapper.appendChild(handoutBox);
+    // -- 課題 --
+    const hwBox = document.createElement('div');
+    hwBox.className = 'resource-box';
+    hwBox.innerHTML = '<span class="section-title" style="margin-top:0; border:none; padding:0;">■ 課題：<a href="https://lms.keio.jp/" class="link-small" target="_blank">提出先</a></span>';
+    const hwArea = document.createElement('div');
+    hwArea.className = 'file-area flex-row';
+    if (item.HW) {
+        if(item.HW.includes('<')) {
+            hwArea.innerHTML = item.HW;
+        } else {
+            let hws = [];
+            if(typeof parseEntries === 'function'){
+                hws = parseEntries(item.HW);
+            } else {
+                const lines = item.HW.split(/\r?\n/);
+                lines.forEach(line => {
+                     const match = line.match(/(.*)\((https?:\/\/.*)\)/);
+                     if(match) hws.push({ label: match[1].trim(), url: match[2].trim() });
+                     else if(line.trim()) hws.push({ label: line.trim(), url: null });
+                });
+            }
+            hws.forEach(hw => {
+                if (hw.url) {
+                    const a = document.createElement('a');
+                    a.href = hw.url;
+                    a.className = 'button docx-button';
+                    a.textContent = hw.label;
+                    a.target = '_blank';
+                    hwArea.appendChild(a);
+                } else {
+                    const span = document.createElement('span');
+                    span.textContent = hw.label;
+                    span.style.padding = '5px';
+                    span.style.fontSize = '0.9rem';
+                    hwArea.appendChild(span);
+                }
+            });
+        }
+    } else {
+        hwArea.innerHTML = '<span style="color:#999; font-size:0.85rem;">課題なし</span>';
+    }
+    hwBox.appendChild(hwArea);
+    resWrapper.appendChild(hwBox);
+    contentWrapper.appendChild(resWrapper);
+  } else {
+    // データなし
+    const msg = document.createElement('div');
+    msg.textContent = "このセッションのデータはありません。";
+    msg.style.textAlign = "center";
+    msg.style.padding = "40px";
+    msg.style.color = "#888";
+    contentWrapper.appendChild(msg);
+  }
+  container.appendChild(contentWrapper);
+}
+/**
+ * ガイダンス風レイアウトで構築します
+ */
+/**
+ * セッション詳細カードを生成する関数（新デザイン対応）
+ */
+function createSessionCard(item) {
+  const container = document.createElement('div');
+  container.className = 'tab-content active'; // アニメーション用クラスなどがあれば維持
+  // 0. 日付・クラス情報の表示（これがないといつの授業かわからなくなるため上部に配置）
+  const headerInfo = document.createElement('div');
+  headerInfo.className = 'session-header-info';
+  const dateStr = item.date2 ? item.date2 : item.date;
+  headerInfo.innerHTML = `<span>Class: ${item.class || '-'}</span><span>Date: ${dateStr || '-'}</span>`;
+  container.appendChild(headerInfo);
+  // 1. 通知エリア (study-notice) -> item.comment を表示
+  if (item.comment) {
+    const noticeDiv = document.createElement('div');
+    noticeDiv.className = 'study-notice';
+    noticeDiv.innerHTML = `
+      <div class="icon">💡</div>
+      <div class="text">
+        <span class="badge-important">重要</span>
+        <span class="highlight">コメント</span><br>
+        ${item.comment} 
+      </div>
+    `;
+    container.appendChild(noticeDiv);
+  }
+  // 2. ビデオセクション
+  if (item.video) {
+    // タイトル
+    const vidTitle = document.createElement('span');
+    vidTitle.className = 'section-title';
+    vidTitle.textContent = '■ ビデオ：';
+    container.appendChild(vidTitle);
+    // グリッドエリア
+    const vidGrid = document.createElement('div');
+    vidGrid.className = 'video-grid';
+    const videos = parseEntries(item.video); // 既存のパース関数を使用
+    if (videos.length) {
+      videos.forEach(v => {
+        if (v.url) {
+          const a = document.createElement('a');
+          a.href = v.url;
+          a.className = 'button video-btn'; // スタイル用クラス
+          a.textContent = v.label;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          vidGrid.appendChild(a);
+        } else {
+          // URLがない場合はボタン風のspanにするか、単なるテキスト
+          const span = document.createElement('span');
+          span.className = 'button';
+          span.style.background = '#eee';
+          span.style.color = '#999';
+          span.textContent = v.label;
+          vidGrid.appendChild(span);
+        }
+      });
+    } else {
+      vidGrid.textContent = "ビデオはありません";
+    }
+    container.appendChild(vidGrid);
+    // 注釈（もし固定で表示したいならコメントアウトを外す、あるいはデータに持たせる）
+    // const note = document.createElement('p');
+    // note.className = 'note-text';
+    // note.textContent = '※ビデオは必ず視聴してください。';
+    // container.appendChild(note);
+  }
+  // 3. リソースラッパー（資料と課題を横並びにするエリア）
+  const resourceWrapper = document.createElement('div');
+  resourceWrapper.className = 'resources-wrapper';
+  // --- 3-A. 資料 (Handout) ---
+  const handoutBox = document.createElement('div');
+  handoutBox.className = 'resource-box';
+  handoutBox.innerHTML = '<span class="section-title">■ 資料：</span>';
+  
+  const handoutArea = document.createElement('div');
+  handoutArea.className = 'file-area';
+  
+  const handouts = parseEntries(item.handout);
+  if (handouts.length) {
+    handouts.forEach(h => {
+      if (h.url) {
+        const a = document.createElement('a');
+        a.href = h.url;
+        // 拡張子判定でアイコンを変える（簡易ロジック）
+        let btnClass = 'button';
+        if (h.url.endsWith('.pdf')) btnClass += ' pdf-button';
+        else if (h.url.endsWith('.docx')) btnClass += ' docx-button';
+        
+        a.className = btnClass;
+        a.textContent = h.label;
+        a.target = '_blank';
+        handoutArea.appendChild(a);
+      } else {
+        const div = document.createElement('div');
+        div.textContent = h.label;
+        handoutArea.appendChild(div);
+      }
+    });
+  } else {
+    handoutArea.innerHTML = '<span style="color:#999; font-size:0.9rem;">資料なし</span>';
+  }
+  handoutBox.appendChild(handoutArea);
+  resourceWrapper.appendChild(handoutBox);
+  // --- 3-B. 課題 (HW) ---
+  const hwBox = document.createElement('div');
+  hwBox.className = 'resource-box';
+  // 提出先リンクなどが固定である場合はHTMLに埋め込むか、データから生成
+  hwBox.innerHTML = '<span class="section-title">■ 課題：</span>'; // 必要なら <a class="link-small">提出先</a> を追加
+  
+  const hwArea = document.createElement('div');
+  hwArea.className = 'file-area flex-row'; // 横並び許可
+  
+  // HWはHTMLタグが含まれる場合と、パース可能なテキストの場合があるため分岐処理
+  if (item.HW) {
+    // 既存のデータが単純な文字列かHTMLか判断
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = item.HW;
+    
+    // もし item.HW の中にリンクが含まれているなら、それをボタン化する処理を入れるのも手ですが、
+    // ここでは単純に表示するか、または parseEntries を試みます。
+    // ※もし item.HW が "課題A (url)" のような形式なら parseEntries が有効
+    // ※もし HTMLタグそのものなら、そのまま表示
+    
+    if (item.HW.includes('<')) {
+        // HTMLタグが含まれている場合はそのまま表示
+        hwArea.innerHTML = item.HW; 
+    } else {
+        // テキスト形式ならボタン化を試みる
+        const hws = parseEntries(item.HW);
+        hws.forEach(hw => {
+            if (hw.url) {
+                const a = document.createElement('a');
+                a.href = hw.url;
+                a.className = 'button docx-button'; // 仮にdocxアイコン
+                a.textContent = hw.label;
+                a.target = '_blank';
+                hwArea.appendChild(a);
+            } else {
+                const span = document.createElement('span');
+                span.style.padding = "5px";
+                span.textContent = hw.label;
+                hwArea.appendChild(span);
+            }
+        });
+    }
+  } else {
+    hwArea.innerHTML = '<span style="color:#999; font-size:0.9rem;">課題なし</span>';
+  }
+  
+  hwBox.appendChild(hwArea);
+  resourceWrapper.appendChild(hwBox);
+  // ラッパーを追加
+  container.appendChild(resourceWrapper);
+  return container;
 }
 /**
  * 汎用的なテーブルレンダリング関数。
  * 指定されたIDのテーブルに、指定されたアイテムを描画する。
  */
-function renderTable(tableId, item, emptyMessage = null) {
-    const table = document.getElementById(tableId);
-    if (!table) return;
-    const tbody = table.querySelector('tbody');
-    if (!tbody) return;
-    tbody.innerHTML = '';
-    if (item) {
-        tbody.appendChild(createRow(item));
-    } else if (emptyMessage) {
-        const tr = document.createElement('tr');
-        const td = document.createElement('td');
-        td.colSpan = 5; 
-        td.textContent = emptyMessage;
-        td.className = 'empty-message-cell';
-        tr.appendChild(td);
-        tbody.appendChild(tr);
-    }
+/**
+ * 汎用的なテーブルレンダリング関数。
+ * 指定されたIDのテーブルに、指定されたアイテムを描画する。
+ */
+/**
+ * 汎用的なテーブルレンダリング関数。
+ * 指定されたIDのテーブルに、指定されたアイテムを描画する。
+ */
+function renderTable(tableId, data, emptyMessage) {
+  const table = document.getElementById(tableId);
+  if (!table) return;
+  const tbody = table.querySelector('tbody');
+  tbody.innerHTML = '';
+  currentPartIndex = 0;
+    if (!data || (Array.isArray(data) && data.length === 0)) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = 5;
+    td.className = "empty-message-cell";
+    td.textContent = emptyMessage || "データがありません";
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+  // 単一オブジェクトの場合は配列に包む
+  const dataArray = Array.isArray(data) ? data : [data];
+  // 各行を生成して追加
+  dataArray.forEach(item => {
+    tbody.appendChild(createRow(item));
+  });
 }
 function setMode(mode){
-  if(mode==='session'){
-    // By Session Overview モード
-    btnSession.classList.add('active'); 		
-	btnSession.setAttribute('aria-selected','true');
-    btnFull.classList.remove('active'); 
-	btnFull.setAttribute('aria-selected','false');
+  // 重要: body.dataset.mode に現在のモードを保持する
+  document.body.dataset.mode = mode;  // ← 追加
+  if(mode==='session'){
+    btnSession.classList.add('active');
+    btnSession.setAttribute('aria-selected','true');
+    btnFull.classList.remove('active');
+    btnFull.setAttribute('aria-selected','false');
     fullScheduleContainer.style.display = 'none';
     sessionOverviewContainer.style.display = 'block';
-	
-    // 検索ボックスはOverviewモードでは無効化し、値をクリア
     searchBox.disabled = true;
     searchBox.value = '';
     renderSessionOverview();
-  } else {
-    // Full Schedule モード
-    btnFull.classList.add('active');
-	btnFull.setAttribute('aria-selected','true');
-    btnSession.classList.remove('active'); 	
-	btnSession.setAttribute('aria-selected','false');
-    /* ↓↓↓ コンテナ切り替えとFullレンダリング ↓↓↓ */
+  } else {
+    btnFull.classList.add('active');
+    btnFull.setAttribute('aria-selected','true');
+    btnSession.classList.remove('active');
+    btnSession.setAttribute('aria-selected','false');
     sessionOverviewContainer.style.display = 'none';
     fullScheduleContainer.style.display = 'block';
-    searchBox.disabled = false; // 検索ボックスを有効化
-    renderFull();
-  }
+    searchBox.disabled = false;
+    renderFull();
+  }
 }
 function filterText(item, text) {
   if (!text) return true;
@@ -2033,28 +2760,54 @@ function renderFull(){
   const tbody = document.querySelector('#scheduleTableFull tbody');
   if (!tbody) return;
   tbody.innerHTML='';
+currentPartIndex = 0;
   const searchText = searchBox.value;
   scheduleData.forEach(item=>{
     if(filterText(item,searchText)) tbody.appendChild(createRow(item));
   });
 }
 function createRow(item){
-  // DocumentFragmentを使って複数行をまとめて返す
   const frag = document.createDocumentFragment();
-  /* セクションタイトル行の処理 */
+  /* --- セクションタイトル（Part）行の処理 --- */
   if (item.session === SECTION_TITLE_IDENTIFIER) {
+    // ★追加：Partが見つかったら番号を1増やす (1, 2, 3...)
+    currentPartIndex++;
     const tr = document.createElement('tr');
-    tr.className = 'section-title-row';
+    
+    // ★修正：動的にクラス名を付与（例: section-title-row part-color-1）
+    tr.className = `section-title-row part-color-${currentPartIndex}`;
     const tdTitle = document.createElement('td');
-    tdTitle.colSpan = 5; // 6列から5列に変更
+    tdTitle.colSpan = 5; 
     tdTitle.textContent = item.class;
     tr.appendChild(tdTitle);
     frag.appendChild(tr);
     return frag;
   }
+  
   /* === 1行目: メイン情報 === */
-  const trMain = document.createElement('tr');
+const trMain = document.createElement('tr');
+// session が数字として解釈できる（"1" や 1 の両方を許容）
+// かつ現在モードが full のときにクリック可能にする
+const sessionNum = Number(item.session);
+if (
+  document.body.dataset.mode === "full" &&
+  !isNaN(sessionNum)
+) {
+  trMain.classList.add("clickable-row");
+  trMain.addEventListener("click", () => {
+    showAdjacentSessions(sessionNum); // 数値を渡す
+  });
+}
+  // 「補講」ならゆるく囲むクラスを付ける
+if (item && (item.format === "補講" || item.format === "休講")) {
+  trMain.classList.add("makeup-row");
+}
   const today = new Date();
+const trVideo = document.createElement('tr');
+trVideo.className = "video-row";
+if (item && (item.format === "補講" || item.format === "休講")) {
+  trVideo.classList.add("makeup-row");
+}
   const deadlineDate = parseDeadlineAsLocal(item.deadlineClass);
   const deadlineDate2 = parseDeadlineAsLocal(item.deadlineHW);
   const hwClass = (deadlineDate && !isNaN(deadlineDate.getTime())) ? (today <= deadlineDate ? 'hw-due' : 'hw-past') : '';
@@ -2128,74 +2881,126 @@ function createRow(item){
   // メイン行にセルを追加 (5列)
   [tdSession, tdDate, tdChapter, tdClass, tdHandout].forEach(td=>trMain.appendChild(td));
   frag.appendChild(trMain);
-  /* === 2行目: Videos (Homework) === */
-  const trVideo = document.createElement('tr');
-  trVideo.className = "video-row";
-  // 1. スペーサーセルを作成 (Session, Date, Chapter, Classの4列分を埋める)
-  const tdSpacer = document.createElement('td');
-  tdSpacer.colSpan = 4; 
-  tdSpacer.className = "video-spacer"; // 必要に応じてCSSで装飾
-  trVideo.appendChild(tdSpacer);
-  // 2. コンテンツセルを作成 (Docsの1列分に配置)
-  const tdVideos = document.createElement('td');
-  // colspanは指定しない（デフォルト1）か、明示的に1を指定
-  tdVideos.colSpan = 1; 
-  // クラスはDocs列と同じスタイルを継承しつつ、期限の色設定(hwClass2)も適用
-  tdVideos.className = "col3 " + hwClass2; 
-  // ラベル追加
-  const label = document.createElement('span');
-  label.className = "video-row-label";
-  label.textContent = "次回までの宿題:";
-  tdVideos.appendChild(label);
-  const videos = parseEntries(item.video);
-  if(videos.length){
-    const ul = document.createElement('ul'); ul.className='video-list';
-    videos.forEach(v=>{
-      const li = document.createElement('li');
-      if(v.url){
-        const anchor = document.createElement('a');
-        anchor.className='video-btn';
-        anchor.textContent=v.label;
-        let isAvailable = true;
-        if (v.availableAfterStr) {
-          const availableStartTime = parseAvailableFromAsLocal(v.availableAfterStr);
-          if (!availableStartTime || isNaN(availableStartTime.getTime()) || today < availableStartTime) {
-            isAvailable = false;
-          }
-        }
-        if (isAvailable) {
-          anchor.href = v.url;
-          anchor.target = '_blank';
-          anchor.rel = 'noopener noreferrer';
-        } else {
-          anchor.classList.add('disabled');
-          anchor.setAttribute('aria-disabled', 'true');
-          if (v.availableAfterStr) {
-            anchor.title = `Available from ${v.availableAfterStr}`;
-          }
-        }
-        li.appendChild(anchor);
-      } else {
-        li.textContent=v.label;
-      }
-      ul.appendChild(li);
-    });
-    tdVideos.appendChild(ul);
-  } else {
-    // 動画がない場合
-    const span = document.createElement('span');
-    span.textContent = "None";
-    span.style.color = "var(--muted)";
-    span.style.fontStyle = "italic";
-    tdVideos.appendChild(span);
-  }
-  
-  trVideo.appendChild(tdVideos);
-  frag.appendChild(trVideo);
-  
   return frag;
 }
 document.addEventListener('DOMContentLoaded',init);
+function showAdjacentSessions(centerSession) {
+  setMode('session'); // ← 既存の BySession モードに切り替え
+  const numericSessions = scheduleData
+    .filter(s => typeof s.session === "number")
+    .sort((a, b) => a.session - b.session);
+  const index = numericSessions.findIndex(
+    s => s.session === centerSession
+  );
+  if (index === -1) return;
+  const prev = numericSessions[index - 1] || null;
+  const curr = numericSessions[index];
+  const next = numericSessions[index + 1] || null;
+  renderTripleSessionView(prev, curr, next);
+}
+/* -----------------------------
+   showAdjacentSessions(center)
+   クリックした session 番号（数値または文字列）を受け取り、
+   「Class N-1 / Class N / Class N+1」を BySession と同じ見た目で表示する
+   ※ 既存の renderTable(tableId, dataArray, emptyMessage) を再利用します
+   ----------------------------- */
+function showAdjacentSessions(centerSessionRaw) {
+  // 安全化： "6" などの文字列も許容して数値化する
+  const centerSession = Number(centerSessionRaw);
+  if (isNaN(centerSession)) return;
+  // 1. numericSessions：'Part' を除き session を数値化できる要素だけ抽出
+  const numericSessions = scheduleData
+    .filter(item => item.session !== SECTION_TITLE_IDENTIFIER)
+    .map(item => {
+      return Object.assign({}, item, { sessionNum: Number(item.session) });
+    })
+    .filter(item => Number.isInteger(item.sessionNum))
+    .sort((a, b) => a.sessionNum - b.sessionNum);
+  // 2. 中央のインデックスを探す
+  const idx = numericSessions.findIndex(s => s.sessionNum === centerSession);
+  if (idx === -1) {
+    // 該当セッションが見つからなければ何もしない（安全）
+    return;
+  }
+  const prev = numericSessions[idx - 1] || null;
+  const curr = numericSessions[idx] || null;
+  const next = numericSessions[idx + 1] || null;
+  // 3. UI を BySession と同じ見た目に切り替える（ただし renderSessionOverview を呼ばない）
+  //    — 既に DOM にある panelLast/panelNext/panelAfterNext を使う想定
+  document.body.dataset.mode = 'session';
+  btnSession.classList.add('active');
+  btnSession.setAttribute('aria-selected', 'true');
+  btnFull.classList.remove('active');
+  btnFull.setAttribute('aria-selected', 'false');
+  fullScheduleContainer.style.display = 'none';
+  sessionOverviewContainer.style.display = 'block';
+  // 検索ボックスは Overview モード相当で無効化
+  searchBox.disabled = true;
+  searchBox.value = '';
+  // 4. パネルにデータを差し替える（見た目は BySession と同じ）
+  renderTripleSessionView(prev, curr, next);
+}
+/* -----------------------------
+   renderTripleSessionView(prev,curr,next)
+   各パネル（panelLast/panelNext/panelAfterNext）を、
+   BySession と **同じ**テーブル描画関数 renderTable(...) で埋める
+   ※ タイトルは "Class N" 形式にする
+   ----------------------------- */
+// 修正版：initializeTables() で作成される table ID と一致させる
+function renderTripleSessionView(prev, curr, next) {
+  const panels = [
+    { panelId: 'panelLast', tableId: 'scheduleTable_panelLast', data: prev },
+    { panelId: 'panelNext', tableId: 'scheduleTable_panelNext', data: curr },
+    { panelId: 'panelAfterNext', tableId: 'scheduleTable_panelAfterNext', data: next }
+  ];
+  panels.forEach(({ panelId, tableId, data }) => {
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+    // タイトルを書き換える（"Class N" または空）
+    const h2 = panel.querySelector('h2');
+    if (data && Number.isInteger(Number(data.session))) {
+      h2.textContent = `Class ${Number(data.session)}`;
+    } else {
+      h2.textContent = '';
+    }
+    // テーブルに描画（initializeTables() が作るIDを使う）
+    if (data) {
+      renderTable(tableId, [data]);
+    } else {
+      renderTable(tableId, [], '該当なし');
+    }
+  });
+}
+function renderTripleSessionView(prev, curr, next) {
+  const panels = [
+    { id: "panelLast", data: prev },
+    { id: "panelNext", data: curr },
+    { id: "panelAfterNext", data: next }
+  ];
+  panels.forEach(({ id, data }) => {
+    const panel = document.getElementById(id);
+    const title = panel.querySelector("h2");
+    if (!data) {
+      title.textContent = "";
+      renderTable(id + "Table", [], "該当なし");
+      return;
+    }
+    title.textContent = `Class ${data.session}`;
+    renderTable(id + "Table", [data]);
+  });
+}
+// 追加：グローバルナビゲーションの言語切り替え機能
+const langBtn = document.getElementById('lang-btn');
+if (langBtn) {
+  langBtn.addEventListener('click', function() {
+      document.body.classList.toggle('is-en');
+      if (document.body.classList.contains('is-en')) {
+          langBtn.textContent = '日本語'; 
+      } else {
+          langBtn.textContent = 'English'; 
+      }
+  });
+}
 </script>
 </body>
 </html>
