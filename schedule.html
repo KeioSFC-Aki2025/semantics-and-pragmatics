@@ -1192,8 +1192,8 @@ function openSubTab(evt, subName) {
   <li><button onclick="openTab(event, 'caution-grid')">履修条件</button></li>
   <li><button onclick="openTab(event, 'study')">予習</button></li>
   <li><button onclick="openTab(event, 'grades')">成績</button></li>
-  <li><button class="active" onclick="openTab(event, 'firstClass')">ガイダンス</button></li>
-  <li><button onclick="openTab(event, 'schedule')">日程</button></li>
+  <li><button onclick="openTab(event, 'firstClass')">ガイダンス</button></li>
+  <li><button class="active" onclick="openTab(event, 'schedule')">日程</button></li>
   <li><button onclick="openTab(event, 'news')">お知らせ</button></li>
   <li><button onclick="openTab(event, 'subjects')">関連科目</button></li>
 </ul>
@@ -1372,7 +1372,7 @@ function openSubTab(evt, subName) {
   
   
   
-<div id="firstClass" class="tab-content active">
+<div id="firstClass" class="tab-content">
   <div class="study-notice">
     <div class="icon">💡</div>
     <div class="text">
@@ -1599,7 +1599,7 @@ function openSubTab(evt, subName) {
   </div>
   
   </div>
-<div id="schedule" class="tab-content">
+<div id="schedule" class="tab-content active">
   <div class="wrap">
 	スケジュールは暫定版で、今後変更されることがありうることに注意してください。
     <div class="card">
@@ -1695,7 +1695,7 @@ const scheduleData =
     "date": 46122,
     "video": "1.1はじめに（16:47）<https://www.youtube.com/watch?v=7M3Z0sKUxaA&feature=youtu.be>, 1.2 縦の具体例（13:50）<https://www.youtube.com/watch?v=7M3Z0sKUxaA&feature=youtu.be>, 1.2 横の具体例<https://www.youtube.com/watch?v=7M3Z0sKUxaA&feature=youtu.be>, 1.3 縦の難しさ<https://www.youtube.com/watch?v=7M3Z0sKUxaA&feature=youtu.be>, 1.3 横の難しさ（27:22）<https://www.youtube.com/watch?v=7M3Z0sKUxaA&feature=youtu.be>",
     "comment": "<span class=\"highlight\">オンラインガイダンス＆選抜課題<\/span><br>履修登録までに、①下記の「ビデオ」を視聴し、「選抜課題」を提出してください。",
-    "handout": "配布プリント（PDF）<https://keiosfc-aki2025.github.io/semantics-and-pragmatics/Chapter-1-Introduction.pdf>",
+    "handout": "配布プリント（PDF）<https://keiosfc-aki2025.github.io/semantics-and-pragmatics/Chapter 2 propositional logic.pdf>",
     "date2": "46122"
   },
   {
@@ -2989,18 +2989,25 @@ function renderTripleSessionView(prev, curr, next) {
     renderTable(id + "Table", [data]);
   });
 }
-// 追加：グローバルナビゲーションの言語切り替え機能
-const langBtn = document.getElementById('lang-btn');
-if (langBtn) {
-  langBtn.addEventListener('click', function() {
-      document.body.classList.toggle('is-en');
-      if (document.body.classList.contains('is-en')) {
-          langBtn.textContent = '日本語'; 
-      } else {
-          langBtn.textContent = 'English'; 
-      }
-  });
-}
+// HTMLがすべて読み込まれてから実行する（エラー防止）
+document.addEventListener('DOMContentLoaded', function() {
+    const langBtn = document.getElementById('lang-btn');
+    
+    // もしページ内にボタンが無くてもエラーを出さないための安全対策
+    if (!langBtn) return; 
+    langBtn.addEventListener('click', function(e) {
+        // もしボタンを <a href="#"> 等で作っていた場合、画面がリロードされるのを防ぐ
+        e.preventDefault(); 
+        
+        document.body.classList.toggle('is-en');
+        
+        if (document.body.classList.contains('is-en')) {
+            langBtn.textContent = '日本語';
+        } else {
+            langBtn.textContent = 'English';
+        }
+    });
+});
 </script>
 </body>
 </html>
