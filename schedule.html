@@ -1600,9 +1600,6 @@ function openSubTab(evt, subName) {
 	スケジュールは暫定版で、今後変更されることがありうることに注意してください。
     <div class="card">
 		<div class="controls">
-			<div class="seg" role="tablist" aria-label="view mode">
-				<button id="btnSession"  role="tab" aria-selected="false">直前／直後の日程</button>
-				 <button id="btnFull" role="tab" class="active" aria-selected="true">学期全体</button>
 			</div>
             <select id="sessionSelect" aria-label="Select session" style="display: none;"></select>
 			<input type="search" id="searchBox" placeholder="検索">
@@ -1803,7 +1800,7 @@ const scheduleData =
   },
   {
     "session": "10",
-    "chapter": "第6章",
+    "chapter": "第7章",
     "class": "VoiceP：態とイベント意味論",
     "date": 46199,
     "deadlineHW": 46199,
@@ -1812,7 +1809,7 @@ const scheduleData =
   },
   {
     "session": "11",
-    "chapter": "第7章",
+    "chapter": "第8章",
     "class": "TP＆AspP：テンス/アスペクトと時制意味論",
     "date": 46206,
     "deadlineHW": 46206,
@@ -1821,7 +1818,7 @@ const scheduleData =
   },
   {
     "session": "12",
-    "chapter": "第8章",
+    "chapter": "第9章",
     "class": "ModalP：モダリティ",
     "date": 46213,
     "deadlineHW": 46213,
@@ -1834,7 +1831,7 @@ const scheduleData =
   },
   {
     "session": "13",
-    "chapter": "第9章",
+    "chapter": "第10章",
     "class": "発話行為論",
     "date": 46220,
     "deadlineHW": 46220,
@@ -1843,17 +1840,22 @@ const scheduleData =
   },
   {
     "session": "14",
-    "chapter": "第10章",
+    "chapter": "第11章",
     "class": "会話の含意",
     "format": "補講",
     "date": 46227,
     "deadlineHW": 46227,
+    "deadlineClass": 46227,
     "date2": "46227"
   },
   {
     "session": "15",
-    "chapter": "第11章",
-    "class": "前提"
+    "chapter": "第12章",
+    "class": "前提",
+    "date": 46227,
+    "deadlineHW": 46227,
+    "deadlineClass": 46227,
+    "date2": "46227"
   },
   {
     "session": "Part",
@@ -2152,12 +2154,7 @@ function renderTripleSessionView(prev, curr, next) {
     }
   });
 }
-  btnSession.addEventListener('click', () => {
-  setMode('session');
-});
-btnFull.addEventListener('click', () => {
-  setMode('full');
-});
+ 
   // 2. データを実際に描画する（これを先に行う）
   renderFull(); 
   
@@ -2725,20 +2722,9 @@ function createRow(item){
     return frag;
   }
   
-  /* === 1行目: メイン情報 === */
+ /* === 1行目: メイン情報 === */
 const trMain = document.createElement('tr');
-// session が数字として解釈できる（"1" や 1 の両方を許容）
-// かつ現在モードが full のときにクリック可能にする
-const sessionNum = Number(item.session);
-if (
-  document.body.dataset.mode === "full" &&
-  !isNaN(sessionNum)
-) {
-  trMain.classList.add("clickable-row");
-  trMain.addEventListener("click", () => {
-    showAdjacentSessions(sessionNum); // 数値を渡す
-  });
-}
+// 行クリックによるモード切替処理を削除
   // 「補講」ならゆるく囲むクラスを付ける
 if (item && (item.format === "補講" || item.format === "休講")) {
   trMain.classList.add("makeup-row");
